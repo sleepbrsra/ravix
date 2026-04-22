@@ -1,8 +1,8 @@
 ![gif](assets/ravix-banner.gif)
 
 
-        RAVIX
-========================
+RAVIX
+
 
 Ravix is a lightweight Linux game launcher built for control, simplicity and chaos-friendly customization.
 
