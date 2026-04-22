@@ -1,10 +1,11 @@
 #!/bin/bash
 
-REPO_URL="https://github.com/sleepbrsra/ravix"   # <-- поменяешь
-INSTALL_DIR="$HOME/.ravix"
-TMP_DIR="$HOME/.ravix/tmp"
-BUILD_DIR="$TMP_DIR/ravix"
-BIN_NAME="ravix-ui"
+REPO_URL="https://github.com/sleepbrsra/ravix"
+
+BASE="$HOME/.ravix"
+REPO="$BASE/repo"
+TMP="$BASE/tmp"
+DESKTOP="$REPO/desktop"
 
 clear
 
@@ -28,58 +29,50 @@ echo ""
 read -p "Select option: " opt
 
 install() {
-    echo "[*] Using tmp dir: $TMP_DIR"
-    mkdir -p "$TMP_DIR"
+    echo "[*] Preparing folders..."
+    mkdir -p "$BASE"
+    mkdir -p "$TMP"
 
-    if [ ! -d "$INSTALL_DIR/.git" ]; then
+    if [ ! -d "$REPO/.git" ]; then
         echo "[*] Cloning repo..."
-        git clone "$REPO_URL" "$INSTALL_DIR"
+        rm -rf "$REPO"
+        git clone "$REPO_URL" "$REPO"
     else
-        echo "[*] Repo exists → checking updates..."
-        cd "$INSTALL_DIR" || exit
+        echo "[*] Repo exists → updating..."
+        cd "$REPO" || exit
 
-        LOCAL_HASH=$(git rev-parse HEAD)
         git fetch origin
-        REMOTE_HASH=$(git rev-parse origin/main)
+        LOCAL=$(git rev-parse HEAD)
+        REMOTE=$(git rev-parse origin/main)
 
-        if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
+        if [ "$LOCAL" = "$REMOTE" ]; then
             echo "[✓] Already up to date"
         else
-            echo "[*] Updating..."
+            echo "[*] Pulling updates..."
             git pull
         fi
     fi
 
-    echo "[*] Preparing build workspace..."
-    rm -rf "$BUILD_DIR"
-    mkdir -p "$TMP_DIR"
-    cp -r "$INSTALL_DIR/desktop" "$BUILD_DIR"
-
-    cd "$BUILD_DIR" || exit
-
-    if [ ! -f package.json ]; then
-        echo "[!] package.json not found"
+    echo "[*] Checking desktop folder..."
+    if [ ! -d "$DESKTOP" ]; then
+        echo "[ERROR] desktop folder not found in repo!"
         exit 1
     fi
 
-    echo "[*] Installing npm deps..."
+    echo "[*] Installing frontend deps..."
+    cd "$DESKTOP" || exit
     npm install
 
     echo "[*] Building Tauri..."
     cd src-tauri || exit
     cargo build --release
 
-    echo "[*] Installing binary..."
-    sudo cp target/release/$BIN_NAME /usr/local/bin/
-
-    echo "[✓] Done!"
+    echo "[*] Done build!"
 }
 
 remove() {
     echo "[*] Removing Ravix..."
-    rm -rf "$INSTALL_DIR"
-    rm -rf "$TMP_DIR"
-    sudo rm -f /usr/local/bin/$BIN_NAME
+    rm -rf "$BASE"
     echo "[✓] Removed"
 }
 
