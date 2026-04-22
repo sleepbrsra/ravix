@@ -1,8 +1,8 @@
+![gif](assets/ravix-banner.gif)
+
 ========================
         RAVIX
 ========================
-
-![gif](assets/ravix-banner.gif)
 
 Ravix is a lightweight Linux game launcher built for control, simplicity and chaos-friendly customization.
 
@@ -15,7 +15,7 @@ Ravix is a custom game launcher for Linux focused on:
 - full control over how games are launched
 - Wine / Proton / PortProton support (no Steam dependency)
 - minimal UI with maximum flexibility
-- local-first design (no cloud, no accounts)
+- local-first design (no cloud, no accounts
 
 It is not another Steam.
 It is what Steam doesn't let you do.
@@ -47,8 +47,8 @@ Ravix is for:
 - developers needing custom launch pipelines
 - users who want a hackable launcher
 
-If you want "just click play" → use Steam.
-If you want control → use Ravix.
+If you want "just click play" → use Steam
+If you want control → use Ravix
 
 ------------------------
 FEATURES
@@ -72,7 +72,7 @@ IN PROGRESS:
 
 PLANNED:
 [-] Mod profiles per game
-[-] Prefix manager (Wine envs)
+[-] Wine prefix manager
 [-] Auto detect installed games
 [-] Plugin system
 [-] CLI tool (ravix add/run/list)
@@ -84,12 +84,12 @@ ARCHITECTURE
 ------------------------
 
 ravix/
- ├── desktop      (Tauri UI)
- ├── ravix_core   (Rust backend)
- │    ├── library
- │    ├── runners
- ├── shared       (types)
- ├── cli          (planned)
+ - desktop      (Tauri UI)
+ - ravix_core   (Rust backend)
+     - library
+     - runners
+ - shared       (types)
+ - cli          (planned)
 
 ------------------------
 HOW IT WORKS
