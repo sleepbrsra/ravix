@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "ravix_core",
+    "cli",
+    "desktop/src-tauri",
+    "shared"
+]
+resolver = "2"

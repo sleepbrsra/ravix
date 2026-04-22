@@ -1,0 +1,403 @@
+:root {
+  --bg: #0b0c10;
+  --panel: rgba(20, 20, 28, 0.85);
+  --border: rgba(255, 255, 255, 0.06);
+  --accent: #7c5cff;
+  --accent-hover: #8e6fff;
+  --text: #e6e6e6;
+  --text-secondary: #a3a3a3;
+}
+
+
+
+
+/* =======================
+   BASE & RESET
+======================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", monospace;
+  background: radial-gradient(circle at 25% 25%, #1a1a22, var(--bg));
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* =======================
+   CURSOR GLOW
+======================= */
+body::before {
+  content: "";
+  position: fixed;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.18), transparent 65%);
+  filter: blur(25px);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  transition: opacity 0.2s;
+}
+
+/* =======================
+   APP LAYOUT
+======================= */
+.app {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* =======================
+   SIDEBAR
+======================= */
+.sidebar {
+  width: 64px;
+  height: 100vh;
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 16px;
+  overflow: hidden;
+  transition: width 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+  z-index: 100;
+  position: relative;
+}
+
+/* Hover expansion */
+.sidebar:hover {
+  width: 220px;
+}
+
+/* =======================
+   BRAND
+======================= */
+.brand {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--accent);
+  background: rgba(124, 92, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand:hover {
+  transform: scale(1.08) rotate(8deg);
+  background: rgba(124, 92, 255, 0.18);
+  box-shadow: 0 0 25px rgba(124, 92, 255, 0.4);
+}
+
+/* =======================
+   NAVIGATION
+======================= */
+.nav {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 8px;
+}
+
+.nav-item {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 14px;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-item.active {
+  background: rgba(124, 92, 255, 0.15);
+  color: var(--accent);
+}
+
+/* Icon */
+.icon {
+  width: 24px;
+  min-width: 24px;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+/* Label */
+.label {
+  margin-left: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+  color: var(--text-secondary);
+}
+
+.sidebar:hover .label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sidebar:hover .nav-item.active .label {
+  color: var(--accent);
+}
+
+/* =======================
+   MAIN CONTENT
+======================= */
+.main {
+  flex: 1;
+  position: relative;
+  overflow: hidden; /* убираем скролл с контейнера */
+  height: 100vh;
+}
+
+
+/* =======================
+   PAGE TRANSITIONS
+======================= */
+.page {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;    /* скролл внутри страницы, а не снаружи */
+  padding: 32px;
+  
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(15px);
+  filter: blur(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+  
+  /* убираем display:none — используем opacity + pointer-events */
+  display: block !important;
+}
+
+.page.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* =======================
+   HOME PAGE
+======================= */
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(124, 92, 255, 0.07), transparent 70%);
+}
+
+.home-bg {
+  font-size: 260px;
+  font-weight: 900;
+  color: rgba(124, 92, 255, 0.06);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* =======================
+   CARDS GRID
+======================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: rgba(20, 20, 28, 0.75);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(124, 92, 255, 0.35);
+  box-shadow: 0 15px 35px rgba(124, 92, 255, 0.12);
+}
+
+/* =======================
+   UTILITIES
+======================= */
+.text-muted {
+  color: var(--text-secondary);
+}
+
+
+/* 111111 */
+.library-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(124, 92, 255, 0.15);
+  color: var(--accent);
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-btn:hover {
+  background: rgba(124, 92, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  width: 320px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(16px);
+}
+
+.modal-content input,
+.modal-content select {
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+  color: var(--text);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.modal-actions button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.modal-actions button:hover {
+  background: rgba(124,92,255,0.2);
+}
+
+
+
+.library-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+
+  background: rgba(11, 12, 16, 0.8);
+  backdrop-filter: blur(10px);
+
+  padding: 12px 0;
+  margin-bottom: 16px;
+  z-index: 10;
+}
+
+/* карточка теперь с действиями */
+.card {
+  background: rgba(20, 20, 28, 0.75);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(124, 92, 255, 0.35);
+}
+
+/* кнопки внутри карточки */
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-btn {
+  flex: 1;
+  padding: 6px 8px;
+
+  border-radius: 10px;
+  border: 1px solid var(--border);
+
+  background: transparent;
+  color: var(--text);
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card-btn:hover {
+  background: rgba(124, 92, 255, 0.2);
+  color: var(--accent);
+}

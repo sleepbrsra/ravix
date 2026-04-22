@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ravix</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <div class="sidebar">
+
+    <div class="brand" data-page="home">
+      R
+    </div>
+
+    <div class="nav-item" data-page="library">
+      <div class="icon">🎮</div>
+      <div class="label">Library</div>
+    </div>
+
+    <div class="nav-item" data-page="runners">
+      <div class="icon">⚙️</div>
+      <div class="label">Runners</div>
+    </div>
+
+    <div class="nav-item" data-page="logs">
+      <div class="icon">📜</div>
+      <div class="label">Logs</div>
+    </div>
+
+    <div class="nav-item" data-page="settings">
+      <div class="icon">🧩</div>
+      <div class="label">Settings</div>
+    </div>
+
+  </div>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <!-- HOME -->
+    <div id="page-home" class="page active home">
+      <div class="home-bg">R</div>
+    </div>
+
+    <!-- LIBRARY -->
+    <div id="page-library" class="page">
+
+      <div class="library-top">
+        <h2>Library</h2>
+
+        <button id="openAddGame" class="add-btn">+</button>
+      </div>
+
+      <div id="games" class="grid"></div>
+
+    </div>
+
+    <!-- RUNNERS -->
+    <div id="page-runners" class="page">
+      <h2>Runners</h2>
+      <p class="text-muted">Wine / Proton / Native configs coming soon</p>
+    </div>
+
+    <!-- LOGS -->
+    <div id="page-logs" class="page">
+      <h2>Logs</h2>
+      <pre id="logBox"></pre>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="page-settings" class="page">
+      <h2>Settings</h2>
+      <p class="text-muted">WIP</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= ADD GAME MODAL ================= -->
+<div id="modal" class="modal hidden">
+
+  <div class="modal-content">
+
+    <h3>Add game</h3>
+
+    <input id="gameName" placeholder="Game name" />
+    <input id="gamePath" placeholder="Path to folder" />
+    <input id="gameExe" placeholder="Executable (game.exe)" />
+
+    <select id="gameRunner">
+      <option value="wine">Wine</option>
+      <option value="proton">Proton</option>
+      <option value="native">Native</option>
+    </select>
+
+    <div class="modal-actions">
+      <button id="closeModal">Cancel</button>
+      <button id="addGameBtn">Add</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ================= SETTINGS MODAL ================= -->
+<div id="settingsModal" class="modal hidden">
+
+  <div class="modal-content">
+
+    <h3>Game Settings</h3>
+
+    <input id="setName" placeholder="Name" />
+    <input id="setPath" placeholder="Path" />
+
+    <select id="setRunner">
+      <option value="wine">Wine</option>
+      <option value="proton">Proton</option>
+      <option value="portproton">PortProton</option>
+      <option value="native">Native</option>
+    </select>
+
+    <div class="modal-actions">
+      <button id="closeSettings">Cancel</button>
+      <button id="saveSettings">Save</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
