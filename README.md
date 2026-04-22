@@ -147,7 +147,7 @@ TECH STACK
 INSTALL
 ------------------------
 
-git clone https://github.com/yourname/ravix
+git clone https://github.com/sleepbrsra/ravix
 cd ravix/installer
 chmod +x setup.sh
 ./setup.sh
